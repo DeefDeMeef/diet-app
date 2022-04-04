@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Diet App</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <h3>Fit-Chain</h3>
+        <!-- <button class="main-btn" id="connectWallet">Connect wallet</button> -->
+      </nav>
+      <main>
+        <section class="tab">
+          <h2>
+            Become a better version of yourself
+          </h2>
+          <button class="main-btn" id="connectWallet">Connect wallet</button>
+          <img src="/img/fitness_undraw.png" alt="">
+          <button class="sec-btn next" disabled>Next</button>
+        </section>
+        <section class="tab">
+          <h2>Welcome to your <br>blockchain weight coach,</h2>
+          <span id="address"></span>
+          <section>
+            <label for="ethereumAddress">On what address should the rewards be send to? (default is connected wallet
+              address)</label>
+            <input type="text" id="ethereumAddress" placeholder="Ethereum address" required>
+            <input type="submit" value="Submit">
+          </section>
+        </section>
+
+        <section class="tab">
+          <label for="ethereumAddress">What weight do you currently have?</label>
+          <input type="text" id="weightAmountCurrent" placeholder="Current weight" required>
+          <label for="ethereumAddress">What weight do you want to reach?</label>
+          <input type="text" id="weightAmount" placeholder="Target weight" required>
+          <input id="setWeightsBtn" type="submit" value="Submit">
+        </section>
+
+        <section class="tab">
+          <label for="depositAmount">Put money on contract</label>
+          <input type="text" id="depositAmount" placeholder="Saaf" required>
+          <input id="depositBtn" type="submit" value="Submit">
+        </section>
+
+        <!-- <section>
+                  <input id="getWeight" type="submit" value="Get weights">
+                </section> -->
+
+        <section class="tab">
+          <label for="newWeight">New weight</label>
+          <input type="text" id="newWeight" placeholder="Weight" required>
+          <input id="newWeightBtn" type="submit" value="Submit">
+        </section>
+
+        <section class="tab">
+          <input id="check" type="submit" value="CHECK">
+        </section>
+      </main>
+    </header>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.4/web3.min.js"
+      integrity="sha512-TTGImODeszogiro9DUvleC9NJVnxO6M0+69nbM3YE9SYcVe4wZp2XYpELtcikuFZO9vjXNPyeoHAhS5DHzX1ZQ=="
+      crossorigin="anonymous" defer></script>
+    <script src="/js/main.js" defer></script>
+    <script src="/js/styling.js" defer></script>
+
+  </body>
+
+</html>
