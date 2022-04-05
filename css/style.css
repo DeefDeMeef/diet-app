@@ -38,6 +38,7 @@ button.main-btn {
   font-size: 14px;
   margin: 4px 2px;
   font-family: 'Montserrat', sans-serif;
+  width: 100%;
 }
 
 button.sec-btn {
@@ -53,6 +54,7 @@ button.sec-btn {
   font-size: 14px;
   margin: 4px 2px;
   font-family: 'Montserrat', sans-serif;
+  width: 100%;
 }
 
 button[disabled] {

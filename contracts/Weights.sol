@@ -34,6 +34,10 @@ contract Weights {
     return futureWeight;
   }
 
+  function getLastWritedWeight() view public returns (int8) {
+    return weights[weights.length - 1];
+  }
+
   function checkWeight(address payable payableAddress) public {
     bool success = false;
     for (uint i = 0; i < weights.length; i++) {

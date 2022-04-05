@@ -1,6 +1,7 @@
-const address = "0x20AAc39A64ac57eb6a217A6263e679ceAC365227";
+const address = "0x447D966Fc780b6f4698dD16d77886630A77E2d9A";
 
-const abi = [{
+const abi = [
+  {
     inputs: [],
     stateMutability: "nonpayable",
     type: "constructor",
@@ -15,16 +16,19 @@ const abi = [{
   {
     inputs: [],
     name: "getBalance",
-    outputs: [{
-      internalType: "uint256",
-      name: "",
-      type: "uint256",
-    }, ],
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{
+    inputs: [
+      {
         internalType: "int8",
         name: "_ownerWeight",
         type: "int8",
@@ -41,11 +45,13 @@ const abi = [{
     type: "function",
   },
   {
-    inputs: [{
-      internalType: "int8",
-      name: "_weight",
-      type: "int8",
-    }, ],
+    inputs: [
+      {
+        internalType: "int8",
+        name: "_weight",
+        type: "int8",
+      },
+    ],
     name: "pushWeight",
     outputs: [],
     stateMutability: "nonpayable",
@@ -54,38 +60,53 @@ const abi = [{
   {
     inputs: [],
     name: "getLastWeight",
-    outputs: [{
-      internalType: "int8",
-      name: "",
-      type: "int8",
-    }, ],
+    outputs: [
+      {
+        internalType: "int8",
+        name: "",
+        type: "int8",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "getFutureWeight",
-    outputs: [{
-      internalType: "int8",
-      name: "",
-      type: "int8",
-    }, ],
+    outputs: [
+      {
+        internalType: "int8",
+        name: "",
+        type: "int8",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{
-      internalType: "address payable",
-      name: "payableAddress",
-      type: "address",
-    }, ],
+    inputs: [],
+    name: "getLastWritedWeight",
+    outputs: [
+      {
+        internalType: "int8",
+        name: "",
+        type: "int8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address payable",
+        name: "payableAddress",
+        type: "address",
+      },
+    ],
     name: "checkWeight",
-    outputs: [{
-      internalType: "bool",
-      name: "",
-      type: "bool",
-    }, ],
-    stateMutability: "payable",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];
@@ -154,15 +175,15 @@ const app = async () => {
 
   const depositBtn = document.querySelector("#depositBtn");
   const setWeightsBtn = document.querySelector("#setWeightsBtn");
-  // const getWeight = document.querySelector("#getWeight");
   const newWeight = document.querySelector("#newWeightBtn");
-  const check = document.querySelector("#check");
+  // const check = document.querySelector("#check");
+  // const getLastW = document.querySelector("#getLast")
 
   depositBtn.addEventListener("click", depositFunds);
   setWeightsBtn.addEventListener("click", setWeights);
-  // getWeight.addEventListener("click", getWeights);
   newWeight.addEventListener("click", addWeight);
-  check.addEventListener("click", getPaid);
+  // check.addEventListener("click", getPaid);
+  // getLastW.addEventListener("click", getLastWritedWeight);
 }
 
 connectWalletBtn.addEventListener("click", connectMeta)
@@ -170,6 +191,13 @@ connectWalletBtn.addEventListener("click", connectMeta)
 const getCurrentBalance = async () => {
   const balance = await this.web3.eth.getBalance(address)
   const ether = this.web3.utils.fromWei(balance, "ether");
+
+  if (ether != 0) {
+    for (let i = 0; i < tabs.length; i++) {
+      tabs[i].classList.add("hidden")
+    }
+    dashboard.classList.remove("hidden");
+  }
 
   console.log("Balance: ", ether)
 }
@@ -212,6 +240,12 @@ const getWeights = async () => {
   const currentWeight = await this.contract.methods.getLastWeight().call();
   const targetWeight = await this.contract.methods.getFutureWeight().call();
 
+  const targetWeightText = document.querySelector("#targetWeightText")
+  const currentWeightText = document.querySelector("#currentWeightText");
+
+  targetWeightText.innerHTML = targetWeight;
+  currentWeightText.innerHTML = currentWeight;
+
   console.log("This is current weight", currentWeight, targetWeight)
 }
 
@@ -226,8 +260,21 @@ const addWeight = async () => {
     from: this.account,
   });
 
+  document.querySelector("#newWeight").value = "";
+  getLastWritedWeight();
+  getPaid();
   console.log(sendit);
 }
+
+const getLastWritedWeight = async () => {
+  const lastWeight = await this.contract.methods.getLastWritedWeight().call();
+
+  const currentWeight = document.querySelector("#currentWeightText")
+
+  currentWeight.innerHTML = lastWeight
+
+  console.log(lastWeight);
+};
 
 const getPaid = async () => {
   let ethAddress = document.querySelector("#ethereumAddress").value;
